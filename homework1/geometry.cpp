@@ -6,7 +6,7 @@ Point::Point(int x, int y)
 	this->y = y;
 }
 
-Point::Point(const Point &p)
+Point::Point(const Point& p)
 {
 	this->x = p.x;
 	this->y = p.y;
@@ -22,7 +22,7 @@ int Point::getY() const
 	return this->y;
 }
 
-Point Point::operator=(const Point &p)
+Point Point::operator=(const Point& p)
 {
 	this->x = p.x;
 	this->y = p.y;
@@ -40,19 +40,12 @@ PolygonalChain::PolygonalChain(int countPoints = 0, Point* p = NULL)
 
 PolygonalChain::PolygonalChain(const PolygonalChain& pc)
 {
-	int newSize = pc.points.size();
-	this->points.resize(newSize);
-	for (int i = 0; i < newSize; i++)
-		this->points[i] = pc.points[i];
+	this->points = pc.points;
 }
 
-PolygonalChain PolygonalChain::operator=(const PolygonalChain &pc)
+PolygonalChain PolygonalChain::operator=(const PolygonalChain& pc)
 {
-	this->points.clear();
-	int newSize = pc.points.size();
-	this->points.resize(newSize);
-	for (int i = 0; i < newSize; i++)
-		this->points[i] = pc.points[i];
+	this->points = pc.points;
 	return *this;
 }
 
@@ -79,23 +72,12 @@ double PolygonalChain::perimeter() const
 
 PolygonalChain::~PolygonalChain()
 {
-	points.clear();
-	points.resize(1);
+	this->points.~vector();
 }
 
-ClosedPolygonalChain::ClosedPolygonalChain(int countPoints = 0, Point* p = NULL)
-{
-	this->points.resize(countPoints);
-	for (int i = 0; i < countPoints; i++)
-		this->points[i] = p[i];
-}
+ClosedPolygonalChain::ClosedPolygonalChain(int countPoints = 0, Point* p = NULL):PolygonalChain(countPoints, p){}
 
-ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc)
-{
-	this->points.resize(cpc.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = cpc.points[i];
-}
+ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc) : PolygonalChain(cpc){}
 
 double ClosedPolygonalChain::perimeter() const
 {
@@ -125,65 +107,37 @@ double ClosedPolygonalChain::area() const
 
 ClosedPolygonalChain ClosedPolygonalChain::operator=(const ClosedPolygonalChain& cpc)
 {
-	this->points.resize(cpc.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = cpc.points[i];
+	this->points = cpc.points;
 	return *this;
 }
 
 ClosedPolygonalChain::~ClosedPolygonalChain()
 {
-	this->points.clear();
-	this->points.resize(1);
+	this->points.~vector();
 }
 
-Polygon::Polygon(int countPoint = 0, Point *p = NULL)
-{
-	this->points.resize(countPoint);
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = p[i];
-}
+Polygon::Polygon(int countPoints = 0, Point* p = NULL):ClosedPolygonalChain(countPoints, p){}
 
-Polygon::Polygon(const Polygon& p)
-{
-	this->points.resize(p.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = p.points[i];
-}
+Polygon::Polygon(const Polygon& p): ClosedPolygonalChain(p){}
 
-Polygon Polygon::operator=(const Polygon &p)
+Polygon Polygon::operator=(const Polygon& p)
 {
-	this->points.resize(p.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = p.points[i];
+	this->points = p.points;
 	return *this;
 }
 
 Polygon::~Polygon()
 {
-	this->points.clear();
-	this->points.resize(1);
+	this->points.~vector();
 }
 
-Triangle::Triangle(int countPoints = 0, Point* p = NULL)
-{
-	this->points.resize(countPoints);
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = p[i];
-}
+Triangle::Triangle(int countPoints = 0, Point* p = NULL): ClosedPolygonalChain(countPoints, p){}
 
-Triangle::Triangle(const Triangle& t)
-{
-	this->points.resize(t.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = t.points[i];
-}
+Triangle::Triangle(const Triangle& t): ClosedPolygonalChain(t){}
 
-Triangle Triangle::operator=(const Triangle &t)
+Triangle Triangle::operator=(const Triangle& t)
 {
-	this->points.resize(t.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = t.points[i];
+	this->points = t.points;
 	return *this;
 }
 
@@ -202,23 +156,12 @@ bool Triangle::hasRightAngle() const
 
 Triangle::~Triangle()
 {
-	this->points.clear();
-	this->points.resize(1);
+	this->points.~vector();
 }
 
-Trapezoid::Trapezoid(int countPoints, Point* p)
-{
-	this->points.resize(countPoints);
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = p[i];
-}
+Trapezoid::Trapezoid(int countPoints, Point* p):ClosedPolygonalChain(countPoints, p){}
 
-Trapezoid::Trapezoid(const Trapezoid& tr)
-{
-	this->points.resize(tr.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = tr.points[i];
-}
+Trapezoid::Trapezoid(const Trapezoid& tr):ClosedPolygonalChain(tr){}
 
 double Trapezoid::height() const
 {
@@ -227,44 +170,28 @@ double Trapezoid::height() const
 	return 2 * this->area() / (a + b);
 }
 
-Trapezoid Trapezoid::operator=(const Trapezoid &tr)
+Trapezoid Trapezoid::operator=(const Trapezoid& tr)
 {
-	this->points.resize(tr.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = tr.points[i];
+	this->points = tr.points;
 	return *this;
 }
 
 Trapezoid::~Trapezoid()
 {
-	this->points.clear();
-	this->points.resize(1);
+	this->points.~vector();
 }
 
-RegularPolygon::RegularPolygon(int countPoints = 0, Point* p = NULL)
-{
-	this->points.resize(countPoints);
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = p[i];
-}
+RegularPolygon::RegularPolygon(int countPoints = 0, Point* p = NULL):ClosedPolygonalChain(countPoints, p){}
 
-RegularPolygon::RegularPolygon(const RegularPolygon& rp)
-{
-	this->points.resize(rp.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = rp.points[i];
-}
+RegularPolygon::RegularPolygon(const RegularPolygon& rp):ClosedPolygonalChain(rp){}
 
-RegularPolygon RegularPolygon::operator=(const RegularPolygon &rp)
+RegularPolygon RegularPolygon::operator=(const RegularPolygon& rp)
 {
-	this->points.resize(rp.points.size());
-	for (int i = 0; i < this->points.size(); i++)
-		this->points[i] = rp.points[i];
+	this->points = rp.points;
 	return *this;
 }
 
 RegularPolygon::~RegularPolygon()
 {
-	this->points.clear();
-	this->points.resize(1);
+	this->points.~vector();
 }
