@@ -11,15 +11,15 @@ class Point
 private:
 	int x, y;
 public:
-	Point(int x = 0,int y = 0);
+	Point(int x = 0, int y = 0);
 
-	Point(const Point &p);
+	Point(const Point& p);
 
 	int getX() const;
 
 	int getY() const;
 
-	Point operator=(const Point &p);
+	Point operator=(const Point& p);
 
 	~Point() {};
 };
@@ -31,9 +31,9 @@ public:
 public:
 	PolygonalChain(int countPoints, Point* p);
 
-	PolygonalChain(const PolygonalChain &pc);
+	PolygonalChain(const PolygonalChain& pc);
 
-	PolygonalChain operator=(const PolygonalChain &pc);
+	PolygonalChain operator=(const PolygonalChain& pc);
 
 	int getN() const;
 
@@ -41,7 +41,7 @@ public:
 
 	virtual double perimeter() const;
 
-	~PolygonalChain();
+	virtual  ~PolygonalChain();
 };
 
 class ClosedPolygonalChain : public PolygonalChain
@@ -55,21 +55,21 @@ public:
 
 	double area() const;
 
-	ClosedPolygonalChain operator=(const ClosedPolygonalChain &cpc);
+	ClosedPolygonalChain operator=(const ClosedPolygonalChain& cpc);
 
-	~ClosedPolygonalChain();
+	virtual ~ClosedPolygonalChain();
 };
 
 class Polygon : public ClosedPolygonalChain
 {
 public:
-	Polygon(int countPoints, Point *p);
+	Polygon(int countPoints, Point* p);
 
-	Polygon(const Polygon &p);
+	Polygon(const Polygon& p);
 
-	Polygon operator=(const Polygon &p);
+	Polygon operator=(const Polygon& p);
 
-	~Polygon();
+	virtual ~Polygon();
 };
 
 class Triangle : public ClosedPolygonalChain
@@ -79,11 +79,11 @@ public:
 
 	Triangle(const Triangle& t);
 
-	Triangle operator=(const Triangle &t);
+	Triangle operator=(const Triangle& t);
 
 	bool hasRightAngle() const;
 
-	~Triangle();
+	virtual ~Triangle();
 };
 
 class Trapezoid : public ClosedPolygonalChain
@@ -95,21 +95,21 @@ public:
 
 	double height() const;
 
-	Trapezoid operator=(const Trapezoid &tr);
+	Trapezoid operator=(const Trapezoid& tr);
 
-	~Trapezoid();
+	virtual ~Trapezoid();
 };
 
 class RegularPolygon : public ClosedPolygonalChain
 {
-public: 
+public:
 	RegularPolygon(int countPoints, Point* p);
 
 	RegularPolygon(const RegularPolygon& rp);
 
-	RegularPolygon operator=(const RegularPolygon &rp);
+	RegularPolygon operator=(const RegularPolygon& rp);
 
-	~RegularPolygon();
+	virtual ~RegularPolygon();
 };
 
 #endif
