@@ -81,6 +81,7 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc) : Po
 
 double ClosedPolygonalChain::perimeter() const
 {
+	//todo use perimeter from base class
 	double sum = 0;
 	int size = points.size();
 	for (int i = 0; i < size - 1; i++)
@@ -93,6 +94,7 @@ double ClosedPolygonalChain::perimeter() const
 
 double ClosedPolygonalChain::area() const
 {
+	//todo use ints
 	double sum = 0;
 	for (int i = 0; i < this->points.size(); i++)
 	{
@@ -107,12 +109,14 @@ double ClosedPolygonalChain::area() const
 
 ClosedPolygonalChain ClosedPolygonalChain::operator=(const ClosedPolygonalChain& cpc)
 {
+	//todo use operator= from base class
 	this->points = cpc.points;
 	return *this;
 }
 
 ClosedPolygonalChain::~ClosedPolygonalChain()
 {
+	//todo dont do it
 	this->points.~vector();
 }
 
@@ -143,6 +147,7 @@ Triangle Triangle::operator=(const Triangle& t)
 
 bool Triangle::hasRightAngle() const
 {
+	//todo without sqrt
 	double a, b, c;
 	a = sqrt(pow((points[1].getX() - points[0].getX()), 2) + pow((points[1].getY() - points[0].getY()), 2));
 	b = sqrt(pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2));
@@ -191,6 +196,7 @@ RegularPolygon RegularPolygon::operator=(const RegularPolygon& rp)
 	return *this;
 }
 
+//todo area and perimeter O(1)
 RegularPolygon::~RegularPolygon()
 {
 	this->points.~vector();
