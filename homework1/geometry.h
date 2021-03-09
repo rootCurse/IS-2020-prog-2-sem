@@ -1,6 +1,6 @@
 #ifndef HEADER_H
 #define HEADER_H
-
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -41,7 +41,7 @@ public:
 
 	virtual double perimeter() const;
 
-	virtual  ~PolygonalChain();
+	virtual  ~PolygonalChain() {}
 };
 
 class ClosedPolygonalChain : public PolygonalChain
@@ -53,11 +53,11 @@ public:
 
 	virtual double perimeter() const;
 
-	double area() const;
+	virtual double area() const;
 
 	ClosedPolygonalChain operator=(const ClosedPolygonalChain& cpc);
-
-	virtual ~ClosedPolygonalChain();
+	//fix dont do it
+	virtual ~ClosedPolygonalChain() {};
 };
 
 class Polygon : public ClosedPolygonalChain
@@ -69,7 +69,7 @@ public:
 
 	Polygon operator=(const Polygon& p);
 
-	virtual ~Polygon();
+	virtual ~Polygon() {};
 };
 
 class Triangle : public ClosedPolygonalChain
@@ -83,7 +83,7 @@ public:
 
 	bool hasRightAngle() const;
 
-	virtual ~Triangle();
+	virtual ~Triangle() {};
 };
 
 class Trapezoid : public ClosedPolygonalChain
@@ -97,7 +97,7 @@ public:
 
 	Trapezoid operator=(const Trapezoid& tr);
 
-	virtual ~Trapezoid();
+	virtual ~Trapezoid() {};
 };
 
 class RegularPolygon : public ClosedPolygonalChain
@@ -109,7 +109,11 @@ public:
 
 	RegularPolygon operator=(const RegularPolygon& rp);
 
-	virtual ~RegularPolygon();
+	virtual double perimeter();
+
+	virtual double area() const;
+
+	virtual ~RegularPolygon() {}
 };
 
 #endif
