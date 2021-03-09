@@ -32,7 +32,7 @@ Point Point::operator=(const Point& p)
 PolygonalChain::PolygonalChain(int countPoints = 0, Point* p = NULL)
 {
 	points.resize(countPoints);
-	for (int i = 0; i < countPoints; i++)
+	for (auto i = 0; i < countPoints; i++)
 	{
 		points[i] = p[i];
 	}
@@ -63,16 +63,11 @@ double PolygonalChain::perimeter() const
 {
 	double sum = 0;
 	int size = points.size();
-	for (int i = 0; i < size - 1; i++)
+	for (auto i = 0; i < size - 1; i++)
 	{
 		sum += sqrt(pow((points[i + 1].getX() - points[i].getX()), 2) + pow((points[i + 1].getY() - points[i].getY()), 2));
 	}
 	return sum;
-}
-
-PolygonalChain::~PolygonalChain()
-{
-	this->points.~vector();
 }
 
 ClosedPolygonalChain::ClosedPolygonalChain(int countPoints = 0, Point* p = NULL):PolygonalChain(countPoints, p){}
@@ -81,10 +76,9 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc) : Po
 
 double ClosedPolygonalChain::perimeter() const
 {
-	//todo use perimeter from base class
 	double sum = 0;
 	int size = points.size();
-	for (int i = 0; i < size - 1; i++)
+	for (auto i = 0; i < size - 1; i++)
 	{
 		sum += sqrt(pow((points[i + 1].getX() - points[i].getX()), 2) + pow((points[i + 1].getY() - points[i].getY()), 2));
 	}
@@ -94,30 +88,22 @@ double ClosedPolygonalChain::perimeter() const
 
 double ClosedPolygonalChain::area() const
 {
-	//todo use ints
-	double sum = 0;
-	for (int i = 0; i < this->points.size(); i++)
+	//fix use ints
+	int sum = 0;
+	for (unsigned int i = 0; i < this->points.size(); i++)
 	{
 		if (i == this->points.size() - 1)
-			sum += (double)this->points[i].getX() * (double)this->points[0].getY() - (double)this->points[i].getY() * (double)this->points[0].getX();
+			sum += this->points[i].getX() * this->points[0].getY() - this->points[i].getY() * this->points[0].getX();
 		else
-			sum += (double)this->points[i].getX() * (double)this->points[i + 1].getY() - (double)this->points[i].getY() * (double)this->points[i + 1].getX();
+			sum += this->points[i].getX() * this->points[i + 1].getY() - this->points[i].getY() * this->points[i + 1].getX();
 	}
-	sum = abs(sum / 2);
-	return sum;
+	return abs((double)sum / 2);
 }
 
 ClosedPolygonalChain ClosedPolygonalChain::operator=(const ClosedPolygonalChain& cpc)
-{
-	//todo use operator= from base class
-	this->points = cpc.points;
+{//fix use operator= from base class
+	PolygonalChain::operator=(cpc);
 	return *this;
-}
-
-ClosedPolygonalChain::~ClosedPolygonalChain()
-{
-	//todo dont do it
-	this->points.~vector();
 }
 
 Polygon::Polygon(int countPoints = 0, Point* p = NULL):ClosedPolygonalChain(countPoints, p){}
@@ -126,13 +112,8 @@ Polygon::Polygon(const Polygon& p): ClosedPolygonalChain(p){}
 
 Polygon Polygon::operator=(const Polygon& p)
 {
-	this->points = p.points;
+	ClosedPolygonalChain::operator=(p);
 	return *this;
-}
-
-Polygon::~Polygon()
-{
-	this->points.~vector();
 }
 
 Triangle::Triangle(int countPoints = 0, Point* p = NULL): ClosedPolygonalChain(countPoints, p){}
@@ -141,27 +122,21 @@ Triangle::Triangle(const Triangle& t): ClosedPolygonalChain(t){}
 
 Triangle Triangle::operator=(const Triangle& t)
 {
-	this->points = t.points;
+	ClosedPolygonalChain::operator=(t);
 	return *this;
 }
 
 bool Triangle::hasRightAngle() const
-{
-	//todo without sqrt
+{//fix without sqrt
 	double a, b, c;
-	a = sqrt(pow((points[1].getX() - points[0].getX()), 2) + pow((points[1].getY() - points[0].getY()), 2));
-	b = sqrt(pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2));
-	c = sqrt(pow((points[0].getX() - points[2].getX()), 2) + pow((points[0].getY() - points[2].getY()), 2));
+	a = pow((points[1].getX() - points[0].getX()), 2) + pow((points[1].getY() - points[0].getY()), 2);
+	b = pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2);
+	c = pow((points[0].getX() - points[2].getX()), 2) + pow((points[0].getY() - points[2].getY()), 2);
 	if (a > c)
 		swap(a, c);
 	if (b > c)
 		swap(b, c);
-	return pow(a, 2) + pow(b, 2) == pow(c, 2);
-}
-
-Triangle::~Triangle()
-{
-	this->points.~vector();
+	return a + b == c;
 }
 
 Trapezoid::Trapezoid(int countPoints, Point* p):ClosedPolygonalChain(countPoints, p){}
@@ -177,13 +152,8 @@ double Trapezoid::height() const
 
 Trapezoid Trapezoid::operator=(const Trapezoid& tr)
 {
-	this->points = tr.points;
+	ClosedPolygonalChain::operator=(tr);
 	return *this;
-}
-
-Trapezoid::~Trapezoid()
-{
-	this->points.~vector();
 }
 
 RegularPolygon::RegularPolygon(int countPoints = 0, Point* p = NULL):ClosedPolygonalChain(countPoints, p){}
@@ -192,12 +162,19 @@ RegularPolygon::RegularPolygon(const RegularPolygon& rp):ClosedPolygonalChain(rp
 
 RegularPolygon RegularPolygon::operator=(const RegularPolygon& rp)
 {
-	this->points = rp.points;
+	ClosedPolygonalChain::operator=(rp);
 	return *this;
 }
 
-//todo area and perimeter O(1)
-RegularPolygon::~RegularPolygon()
+double RegularPolygon::perimeter()
 {
-	this->points.~vector();
+	return sqrt(pow(this->points[0].getX() - this->points[1].getX(), 2) + pow(this->points[0].getY() - this->points[1].getY(), 2)) * this->getN();
+}
+//fix area and perimeter O(1)
+double RegularPolygon::area() const
+{
+	double angle = 360 / (2 * this->getN()) * (M_PI / 180);
+	double lenght = pow(this->points[0].getX() - this->points[1].getX(), 2) + pow(this->points[0].getY() - this->points[1].getY(), 2);
+	double temp = ((double)this->getN() * lenght) / (4 * tan(angle));
+	return temp;
 }
