@@ -1,5 +1,5 @@
 #include "geometry.h"
-
+//todo fixed not fix
 Point::Point(int x, int y)
 {
 	this->x = x;
@@ -76,6 +76,8 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc) : Po
 
 double ClosedPolygonalChain::perimeter() const
 {
+	//todo where is my previous todos?
+	//todo use perimeter from base class
 	double sum = 0;
 	int size = points.size();
 	for (auto i = 0; i < size - 1; i++)
@@ -145,6 +147,7 @@ Trapezoid::Trapezoid(const Trapezoid& tr):ClosedPolygonalChain(tr){}
 
 double Trapezoid::height() const
 {
+	//todo you count length too often not to make a fuction for it
 	double a = sqrt(pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2));
 	double b = sqrt(pow((points[0].getX() - points[3].getX()), 2) + pow((points[0].getY() - points[3].getY()), 2));
 	return 2 * this->area() / (a + b);
