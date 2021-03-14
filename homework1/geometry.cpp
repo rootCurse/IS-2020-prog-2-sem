@@ -49,14 +49,14 @@ PolygonalChain PolygonalChain::operator=(const PolygonalChain& pc)
 	return *this;
 }
 
-double PolygonalChain::len(Point p1, Point p2)
-{
-	return sqrt(pow((p1.getX() - p2.getX()), 2) + pow((p1.getY() - p2[i].getY()), 2));
-}
-
 int PolygonalChain::getN() const
 {
 	return points.size();
+}
+
+double PolygonalChain::len(Point p1, Point p2) const
+{
+	return sqrt(pow((p1.getX() - p2.getX()), 2) + pow((p1.getY() - p2.getY()), 2));
 }
 
 Point PolygonalChain::getPoint(int index) const
@@ -83,7 +83,7 @@ double ClosedPolygonalChain::perimeter() const
 {
 	//fixed where is my previous todos?
 	//fixed use perimeter from base class
-	return PolygonalChain::perimeter() + sqrt(pow((points[0].getX() - points[size - 1].getX()), 2) + pow((points[0].getY() - points[size - 1].getY()), 2));;
+	return PolygonalChain::perimeter() + sqrt(pow((points[0].getX() - points[this->getN() - 1].getX()), 2) + pow((points[0].getY() - points[this->getN() - 1].getY()), 2));;
 }
 
 double ClosedPolygonalChain::area() const
@@ -145,7 +145,7 @@ Trapezoid::Trapezoid(const Trapezoid& tr):ClosedPolygonalChain(tr){}
 
 double Trapezoid::height() const
 {
-	//todo you count length too often not to make a fuction for it
+	//fixed you count length too often not to make a fuction for it
 	double a = this->len(this->points[1], this->points[2]);
 	double b = this->len(this->points[0], this->points[3]);
 	return 2 * this->area() / (a + b);
@@ -175,7 +175,7 @@ double RegularPolygon::perimeter()
 double RegularPolygon::area() const
 {
 	double angle = 360 / (2 * this->getN()) * (M_PI / 180);
-	double lenght = this->len(this->points[0], this->points[1]);
+	double lenght = pow(this->len(this->points[0], this->points[1]), 2);
 	double temp = ((double)this->getN() * lenght) / (4 * tan(angle));
 	return temp;
 }

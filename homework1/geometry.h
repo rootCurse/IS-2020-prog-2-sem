@@ -37,6 +37,8 @@ public:
 
 	int getN() const;
 
+	double len(Point p1, Point p2) const;
+
 	Point getPoint(int index) const;
 
 	virtual double perimeter() const;
