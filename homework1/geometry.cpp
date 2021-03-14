@@ -1,5 +1,5 @@
 #include "geometry.h"
-//todo fixed not fix
+//fixed fixed not fix
 Point::Point(int x, int y)
 {
 	this->x = x;
@@ -49,6 +49,11 @@ PolygonalChain PolygonalChain::operator=(const PolygonalChain& pc)
 	return *this;
 }
 
+double PolygonalChain::len(Point p1, Point p2)
+{
+	return sqrt(pow((p1.getX() - p2.getX()), 2) + pow((p1.getY() - p2[i].getY()), 2));
+}
+
 int PolygonalChain::getN() const
 {
 	return points.size();
@@ -65,7 +70,7 @@ double PolygonalChain::perimeter() const
 	int size = points.size();
 	for (auto i = 0; i < size - 1; i++)
 	{
-		sum += sqrt(pow((points[i + 1].getX() - points[i].getX()), 2) + pow((points[i + 1].getY() - points[i].getY()), 2));
+		sum += this->len(this->points[i], this->points[i + 1]);
 	}
 	return sum;
 }
@@ -76,21 +81,14 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc) : Po
 
 double ClosedPolygonalChain::perimeter() const
 {
-	//todo where is my previous todos?
-	//todo use perimeter from base class
-	double sum = 0;
-	int size = points.size();
-	for (auto i = 0; i < size - 1; i++)
-	{
-		sum += sqrt(pow((points[i + 1].getX() - points[i].getX()), 2) + pow((points[i + 1].getY() - points[i].getY()), 2));
-	}
-	sum += sqrt(pow((points[0].getX() - points[size - 1].getX()), 2) + pow((points[0].getY() - points[size - 1].getY()), 2));
-	return sum;
+	//fixed where is my previous todos?
+	//fixed use perimeter from base class
+	return PolygonalChain::perimeter() + sqrt(pow((points[0].getX() - points[size - 1].getX()), 2) + pow((points[0].getY() - points[size - 1].getY()), 2));;
 }
 
 double ClosedPolygonalChain::area() const
 {
-	//fix use ints
+	//fixed use ints
 	int sum = 0;
 	for (unsigned int i = 0; i < this->points.size(); i++)
 	{
@@ -103,7 +101,7 @@ double ClosedPolygonalChain::area() const
 }
 
 ClosedPolygonalChain ClosedPolygonalChain::operator=(const ClosedPolygonalChain& cpc)
-{//fix use operator= from base class
+{//fixed use operator= from base class
 	PolygonalChain::operator=(cpc);
 	return *this;
 }
@@ -129,7 +127,7 @@ Triangle Triangle::operator=(const Triangle& t)
 }
 
 bool Triangle::hasRightAngle() const
-{//fix without sqrt
+{//fixed without sqrt
 	double a, b, c;
 	a = pow((points[1].getX() - points[0].getX()), 2) + pow((points[1].getY() - points[0].getY()), 2);
 	b = pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2);
@@ -148,8 +146,8 @@ Trapezoid::Trapezoid(const Trapezoid& tr):ClosedPolygonalChain(tr){}
 double Trapezoid::height() const
 {
 	//todo you count length too often not to make a fuction for it
-	double a = sqrt(pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2));
-	double b = sqrt(pow((points[0].getX() - points[3].getX()), 2) + pow((points[0].getY() - points[3].getY()), 2));
+	double a = this->len(this->points[1], this->points[2]);
+	double b = this->len(this->points[0], this->points[3]);
 	return 2 * this->area() / (a + b);
 }
 
@@ -171,13 +169,13 @@ RegularPolygon RegularPolygon::operator=(const RegularPolygon& rp)
 
 double RegularPolygon::perimeter()
 {
-	return sqrt(pow(this->points[0].getX() - this->points[1].getX(), 2) + pow(this->points[0].getY() - this->points[1].getY(), 2)) * this->getN();
+	return this->len(this->points[0], this->points[1]) * this->getN();
 }
-//fix area and perimeter O(1)
+//fixed area and perimeter O(1)
 double RegularPolygon::area() const
 {
 	double angle = 360 / (2 * this->getN()) * (M_PI / 180);
-	double lenght = pow(this->points[0].getX() - this->points[1].getX(), 2) + pow(this->points[0].getY() - this->points[1].getY(), 2);
+	double lenght = this->len(this->points[0], this->points[1]);
 	double temp = ((double)this->getN() * lenght) / (4 * tan(angle));
 	return temp;
 }
