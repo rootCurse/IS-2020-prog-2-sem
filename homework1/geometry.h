@@ -58,7 +58,7 @@ public:
 	virtual double area() const;
 
 	ClosedPolygonalChain operator=(const ClosedPolygonalChain& cpc);
-	//fix dont do it
+	//todo use default
 	virtual ~ClosedPolygonalChain() {};
 };
 

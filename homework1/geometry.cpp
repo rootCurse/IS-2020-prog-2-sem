@@ -1,5 +1,4 @@
 #include "geometry.h"
-//fixed fixed not fix
 Point::Point(int x, int y)
 {
 	this->x = x;
@@ -81,14 +80,12 @@ ClosedPolygonalChain::ClosedPolygonalChain(const ClosedPolygonalChain& cpc) : Po
 
 double ClosedPolygonalChain::perimeter() const
 {
-	//fixed where is my previous todos?
-	//fixed use perimeter from base class
+
 	return PolygonalChain::perimeter() + sqrt(pow((points[0].getX() - points[this->getN() - 1].getX()), 2) + pow((points[0].getY() - points[this->getN() - 1].getY()), 2));;
 }
 
 double ClosedPolygonalChain::area() const
 {
-	//fixed use ints
 	int sum = 0;
 	for (unsigned int i = 0; i < this->points.size(); i++)
 	{
@@ -101,7 +98,7 @@ double ClosedPolygonalChain::area() const
 }
 
 ClosedPolygonalChain ClosedPolygonalChain::operator=(const ClosedPolygonalChain& cpc)
-{//fixed use operator= from base class
+{
 	PolygonalChain::operator=(cpc);
 	return *this;
 }
@@ -127,7 +124,8 @@ Triangle Triangle::operator=(const Triangle& t)
 }
 
 bool Triangle::hasRightAngle() const
-{//fixed without sqrt
+{
+	//todo you dont need doubles
 	double a, b, c;
 	a = pow((points[1].getX() - points[0].getX()), 2) + pow((points[1].getY() - points[0].getY()), 2);
 	b = pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2);
