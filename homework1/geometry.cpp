@@ -125,8 +125,8 @@ Triangle Triangle::operator=(const Triangle& t)
 
 bool Triangle::hasRightAngle() const
 {
-	//todo you dont need doubles
-	double a, b, c;
+	//fixed you dont need doubles
+	int a, b, c;
 	a = pow((points[1].getX() - points[0].getX()), 2) + pow((points[1].getY() - points[0].getY()), 2);
 	b = pow((points[2].getX() - points[1].getX()), 2) + pow((points[2].getY() - points[1].getY()), 2);
 	c = pow((points[0].getX() - points[2].getX()), 2) + pow((points[0].getY() - points[2].getY()), 2);
@@ -143,7 +143,6 @@ Trapezoid::Trapezoid(const Trapezoid& tr):ClosedPolygonalChain(tr){}
 
 double Trapezoid::height() const
 {
-	//fixed you count length too often not to make a fuction for it
 	double a = this->len(this->points[1], this->points[2]);
 	double b = this->len(this->points[0], this->points[3]);
 	return 2 * this->area() / (a + b);
@@ -169,7 +168,7 @@ double RegularPolygon::perimeter()
 {
 	return this->len(this->points[0], this->points[1]) * this->getN();
 }
-//fixed area and perimeter O(1)
+
 double RegularPolygon::area() const
 {
 	double angle = 360 / (2 * this->getN()) * (M_PI / 180);

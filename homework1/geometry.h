@@ -21,7 +21,7 @@ public:
 
 	Point operator=(const Point& p);
 
-	~Point() {};
+	~Point() = default;
 };
 
 class PolygonalChain
@@ -43,7 +43,7 @@ public:
 
 	virtual double perimeter() const;
 
-	virtual  ~PolygonalChain() {}
+	virtual  ~PolygonalChain() = default;
 };
 
 class ClosedPolygonalChain : public PolygonalChain
@@ -58,8 +58,8 @@ public:
 	virtual double area() const;
 
 	ClosedPolygonalChain operator=(const ClosedPolygonalChain& cpc);
-	//todo use default
-	virtual ~ClosedPolygonalChain() {};
+	//fixed use default
+	virtual ~ClosedPolygonalChain() = default;
 };
 
 class Polygon : public ClosedPolygonalChain
@@ -71,7 +71,7 @@ public:
 
 	Polygon operator=(const Polygon& p);
 
-	virtual ~Polygon() {};
+	virtual ~Polygon()  = default;
 };
 
 class Triangle : public ClosedPolygonalChain
@@ -85,7 +85,7 @@ public:
 
 	bool hasRightAngle() const;
 
-	virtual ~Triangle() {};
+	virtual ~Triangle()  = default;
 };
 
 class Trapezoid : public ClosedPolygonalChain
@@ -99,7 +99,7 @@ public:
 
 	Trapezoid operator=(const Trapezoid& tr);
 
-	virtual ~Trapezoid() {};
+	virtual ~Trapezoid() = default;
 };
 
 class RegularPolygon : public ClosedPolygonalChain
@@ -115,7 +115,7 @@ public:
 
 	virtual double area() const;
 
-	virtual ~RegularPolygon() {}
+	virtual ~RegularPolygon() = default;
 };
 
 #endif
