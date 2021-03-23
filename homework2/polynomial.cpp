@@ -81,6 +81,7 @@ void operator+=(Polynomial &p1, const Polynomial& p2)
 		p1.odds[i] = newOdds[i];
 }
 
+//todo without creating new object
 void operator-=(Polynomial& p1, const Polynomial& p2)
 {
 	p1 += -p2;
@@ -88,6 +89,7 @@ void operator-=(Polynomial& p1, const Polynomial& p2)
 
 void operator/=(Polynomial& p, int num)
 {
+	//todo for_each
 	for (auto i = 0; i < p.maxp - p.minp + 1; i++)
 		p.odds[i] /= num;
 }
@@ -243,6 +245,7 @@ istream& operator>>(istream& in, Polynomial& p)
 	return in;
 }
 
+//todo get O(n)
 double Polynomial::get(int x)
 {
 	double result = 0;

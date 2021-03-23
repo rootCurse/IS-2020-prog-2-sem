@@ -19,6 +19,7 @@ public:
 
 	int& operator[](int index);
 
+	//todo += inside class, return this
 	friend void operator+=(Polynomial &p1, const Polynomial& p2);
 
 	friend void operator-=(Polynomial &p1, const Polynomial& p2);
@@ -51,6 +52,7 @@ public:
 
 	double get(int x);
 
+	//todo = return this
 	void operator=(const Polynomial& p1);
 
 	~Polynomial();
