@@ -58,40 +58,46 @@ int& Polynomial::operator[](int index)
 	return this->odds[index - minp];
 }
 
-void operator+=(Polynomial &p1, const Polynomial& p2)
+Polynomial& Polynomial::operator+=(const Polynomial& p)
 {
-	int newMin = min(p1.minp, p2.minp);
-	int newMax = max(p1.maxp, p2.maxp);
+	int newMin = min(this->minp, p.minp);
+	int newMax = max(this->maxp, p.maxp);
 	int* newOdds = new int[newMax - newMin + 1];
 	for (auto i = 0; i < newMax - newMin + 1; i++)
 		newOdds[i] = 0;
 	for (auto i = 0; i < newMax - newMin + 1; i++)
 	{
 		int nm = newMin + i;
-		if (nm >= p1.minp && nm <= p1.maxp)
-			newOdds[i] += p1.odds[nm - p1.minp];
-		if (nm >= p2.minp && nm <= p2.maxp)
-			newOdds[i] += p2.odds[nm - p2.minp];
+		if (nm >= this->minp && nm <= this->maxp)
+			newOdds[i] += this->odds[nm - this->minp];
+		if (nm >= p.minp && nm <= p.maxp)
+			newOdds[i] += p.odds[nm - p.minp];
 	}
-	delete[] p1.odds;
-	p1.minp = newMin;
-	p1.maxp = newMax;
-	p1.odds = new int[newMax - newMin + 1];
+	delete[] this->odds;
+	this->minp = newMin;
+	this->maxp = newMax;
+	this->odds = new int[newMax - newMin + 1];
 	for (auto i = 0; i < newMax - newMin + 1; i++)
-		p1.odds[i] = newOdds[i];
+		this->odds[i] = newOdds[i];
+	return *this;
 }
 
-//todo without creating new object
-void operator-=(Polynomial& p1, const Polynomial& p2)
+Polynomial& Polynomial::operator-=(const Polynomial& p)
 {
-	p1 += -p2;
+	*this += -p;
+	return *this;
 }
 
-void operator/=(Polynomial& p, int num)
+Polynomial& Polynomial::operator/=(int num)
 {
-	//todo for_each
-	for (auto i = 0; i < p.maxp - p.minp + 1; i++)
-		p.odds[i] /= num;
+	// fixed: use for each
+	int* first = this->odds;
+	int last = this->odds[maxp - minp + 1];
+	for (; *first != last; ++first) 
+	{
+		*first /= num;
+	}
+	return *this;
 }
 
 Polynomial operator/(const Polynomial& p, int num)
@@ -245,16 +251,20 @@ istream& operator>>(istream& in, Polynomial& p)
 	return in;
 }
 
-//todo get O(n)
+//fixed get O(n)
 double Polynomial::get(int x)
 {
-	double result = 0;
-	for (auto i = 0; i < this->maxp - this->minp + 1; i++)
-		result += this->odds[i] * pow(x, this->minp + i);
+	double temp = pow(x, minp);
+	double result = this->odds[0] * temp;
+	for (auto i = 1; i < this->maxp - this->minp + 1; i++)
+	{
+		temp *= x;
+		result += (double)this->odds[i] * temp;
+	}
 	return result;
 }
 
-void Polynomial::operator=(const Polynomial& p1)
+Polynomial& Polynomial::operator=(const Polynomial& p1)
 {
 	this->maxp = p1.maxp;
 	this->minp = p1.minp;
@@ -264,6 +274,7 @@ void Polynomial::operator=(const Polynomial& p1)
 	{
 		this->odds[i] = p1.odds[i];
 	}
+	return *this;
 }
 
 Polynomial::~Polynomial()

@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 class Polynomial
@@ -19,12 +20,13 @@ public:
 
 	int& operator[](int index);
 
-	//todo += inside class, return this
-	friend void operator+=(Polynomial &p1, const Polynomial& p2);
+	//fixed += inside class, return this
 
-	friend void operator-=(Polynomial &p1, const Polynomial& p2);
+	Polynomial& operator+=(const Polynomial& p);
 
-	friend void operator/=(Polynomial& p, int num);
+	Polynomial& operator-=(const Polynomial& p);
+
+	Polynomial& operator/=(int num);
 
 	friend Polynomial operator/(const Polynomial& p, int num);
 
@@ -52,17 +54,11 @@ public:
 
 	double get(int x);
 
-	//todo = return this
-	void operator=(const Polynomial& p1);
+	//fixed = return this
+	Polynomial& operator=(const Polynomial& p1);
 
 	~Polynomial();
 };
-
-
-
-
-
-
 
 
 #endif
