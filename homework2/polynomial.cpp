@@ -58,7 +58,7 @@ int& Polynomial::operator[](int index)
 	return this->odds[index - minp];
 }
 
-Polynomial& Polynomial::operator+=(const Polynomial& p)
+Polynomial& Polynomial::PlusOrMinus(int odd, const Polynomial& p)
 {
 	int newMin = min(this->minp, p.minp);
 	int newMax = max(this->maxp, p.maxp);
@@ -71,7 +71,7 @@ Polynomial& Polynomial::operator+=(const Polynomial& p)
 		if (nm >= this->minp && nm <= this->maxp)
 			newOdds[i] += this->odds[nm - this->minp];
 		if (nm >= p.minp && nm <= p.maxp)
-			newOdds[i] += p.odds[nm - p.minp];
+			newOdds[i] += odd*p.odds[nm - p.minp];
 	}
 	delete[] this->odds;
 	this->minp = newMin;
@@ -82,10 +82,14 @@ Polynomial& Polynomial::operator+=(const Polynomial& p)
 	return *this;
 }
 
+Polynomial& Polynomial::operator+=(const Polynomial& p)
+{
+	return PlusOrMinus(1, p);
+}
+//fixed: without creating new object
 Polynomial& Polynomial::operator-=(const Polynomial& p)
 {
-	*this += -p;
-	return *this;
+	return PlusOrMinus(-1, p);
 }
 
 Polynomial& Polynomial::operator/=(int num)

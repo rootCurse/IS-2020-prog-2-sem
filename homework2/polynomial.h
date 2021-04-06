@@ -22,6 +22,8 @@ public:
 
 	//fixed += inside class, return this
 
+	Polynomial& PlusOrMinus(int odd, const Polynomial& p);
+
 	Polynomial& operator+=(const Polynomial& p);
 
 	Polynomial& operator-=(const Polynomial& p);
