@@ -91,12 +91,7 @@ Polynomial& Polynomial::operator-=(const Polynomial& p)
 Polynomial& Polynomial::operator/=(int num)
 {
 	// fixed: use for each
-	int* first = this->odds;
-	int last = this->odds[maxp - minp + 1];
-	for (; *first != last; ++first) 
-	{
-		*first /= num;
-	}
+	for_each(this->odds, this->odds + maxp - minp + 1, [&num](int& item) {item /= num; });
 	return *this;
 }
 
