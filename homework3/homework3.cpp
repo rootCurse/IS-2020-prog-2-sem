@@ -44,56 +44,56 @@ void mySplit(string str, string& subStr1, string& subStr2)
 	}
 }
 
-void Parsing(string str, int i, int j)
+void Parsing(string str, int index, int indexOfStop)
 {
-	if (i % 8 == 1)
-		container[j].typeOfTransport = str;
-	if (i % 8 == 2)
+	if (index % 8 == 1)
+		container[indexOfStop].typeOfTransport = str;
+	if (index % 8 == 2)
 	{
-		if (j == 0)
+		if (indexOfStop == 0)
 			zeroName = str;
 		else
-			container[j].stop = (str == zeroName);
+			container[indexOfStop].stop = (str == zeroName);
 	}
-	if (i % 8 == 5)
+	if (index % 8 == 5)
 	{
 		int flag;
-		container[j].site = str;
-		string s1, s2;
-		mySplit(str, s1, s2);
-		container[j].firstSite = s1;
-		container[j].secondSite = s2;
+		container[indexOfStop].site = str;
+		string subStr1, subStr2;
+		mySplit(str, subStr1, subStr2);
+		container[indexOfStop].firstSite = subStr1;
+		container[indexOfStop].secondSite = subStr2;
 		flag = 0;
-		if (container[j].stop == 1)
+		if (container[indexOfStop].stop == 1)
 		{
 			if (!streets.empty())
 				for (auto i = 0; i < streets.size(); i++)
-					if (streets[i].first == container[j].firstSite && (!container[j].firstSite.empty()))
+					if (streets[i].first == container[indexOfStop].firstSite && (!container[indexOfStop].firstSite.empty()))
 					{
 						flag = 1;
 						streets[i].second += 1;
 					}
-					else if (streets[i].first == container[j].secondSite && (!container[j].firstSite.empty()))
+					else if (streets[i].first == container[indexOfStop].secondSite && (!container[indexOfStop].firstSite.empty()))
 					{
 						flag = 2;
 						streets[i].second += 1;
 					}
 			    if (flag == 0)
-					streets.push_back(make_pair(container[j].firstSite, 1));
+					streets.push_back(make_pair(container[indexOfStop].firstSite, 1));
 				else
 				{
-					streets.push_back(make_pair(container[j].firstSite, 1));
-					streets.push_back(make_pair(container[j].secondSite, 1));
+					streets.push_back(make_pair(container[indexOfStop].firstSite, 1));
+					streets.push_back(make_pair(container[indexOfStop].secondSite, 1));
 				}
 		}
 	}
-	if (i % 8 == 6)
+	if (index % 8 == 6)
 	{
 		string buffer;
 		buffer.clear();
-		if (container[j].stop == 1)
+		if (container[indexOfStop].stop == 1)
 		{
-			if (j < 888)
+			if (indexOfStop < 888)
 			{
 				for (auto value : str)
 				{
@@ -101,27 +101,27 @@ void Parsing(string str, int i, int j)
 						buffer.push_back(value);
 					else
 					{
-						stopTram.insert(make_pair(buffer, j));
+						stopTram.insert(make_pair(buffer, indexOfStop));
 						tramR.insert(buffer);
 						buffer.clear();
 					}
 				}
-				stopTram.insert(make_pair(buffer, j));
+				stopTram.insert(make_pair(buffer, indexOfStop));
 				tramR.insert(buffer);
 				buffer.clear();
 			}
-			else if (j >= 888 && j < 2080)
+			else if (indexOfStop >= 888 && indexOfStop < 2080)
 			{
 				for (auto value : str)
 					if (value != ',')
 						buffer.push_back(value);
 					else
 					{
-						stopTrolleybus.insert(make_pair(buffer, j));
+						stopTrolleybus.insert(make_pair(buffer, indexOfStop));
 						trolleybusR.insert(buffer);
 						buffer.clear();
 					}
-				stopTrolleybus.insert(make_pair(buffer, j));
+				stopTrolleybus.insert(make_pair(buffer, indexOfStop));
 				trolleybusR.insert(buffer);
 				buffer.clear();
 			}
@@ -132,25 +132,25 @@ void Parsing(string str, int i, int j)
 						buffer.push_back(value);
 					else
 					{
-						stopBus.insert(make_pair(buffer, j));
+						stopBus.insert(make_pair(buffer, indexOfStop));
 						busR.insert(buffer);
 						buffer.clear();
 					}
-				stopBus.insert(make_pair(buffer, j));
+				stopBus.insert(make_pair(buffer, indexOfStop));
 				busR.insert(buffer);
 				buffer.clear();
 			}
 		}
 	}
-	if (i % 8 == 7)
+	if (index % 8 == 7)
 	{
 		double coordinates1, coordinates2;
 		string subStr1, subStr2;
 		mySplit(str, subStr1, subStr2);
 		coordinates1 = stof(subStr1);
 		coordinates2 = stof(subStr2);
-		container[j].coordinatesOne = coordinates1;
-		container[j].coordinatesTwo = coordinates2;
+		container[indexOfStop].coordinatesOne = coordinates1;
+		container[indexOfStop].coordinatesTwo = coordinates2;
 	}
 }
 
