@@ -163,6 +163,7 @@ double lenght(double firstStop, double secondStop)
 	return asin(sqrt(firstSin * firstSin + secondSin * secondSin * cos(container[firstStop].coordinatesOne) * cos(container[secondStop].coordinatesOne)));
 }
 
+//todo const&
 void Task1(multimap<string, int> m, set<string> r)
 {
 	string route;
@@ -264,6 +265,7 @@ int main()
 	//*********************************************************TASK3***************************************************************************
 	int streetStop = 0;
 	int position = 0;
+	//todo first second
 	for (auto it = 0; it < streets.size(); it++)
 		if (streets[it].second > streetStop && !streets[it].first.empty())
 		{
