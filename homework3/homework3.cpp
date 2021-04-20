@@ -163,6 +163,50 @@ double lenght(double firstStop, double secondStop)
 	return asin(sqrt(firstSin * firstSin + secondSin * secondSin * cos(container[firstStop].coordinatesOne) * cos(container[secondStop].coordinatesOne)));
 }
 
+void Task1(multimap<string, int> m, set<string> r)
+{
+	string route;
+	int countOfStop = 0;
+	for (auto value : r)
+		if (countOfStop < m.count(value))
+		{
+			countOfStop = m.count(value);
+			route = value;
+		}
+	cout << "Number of route: " << route << " - Quantity of bus stop: " << countOfStop << endl;
+}
+
+void Task2(multimap<string, int> m, set<string> r)
+{
+	double thisLenght = 0, maxLenght = 0;
+	string route;
+	double tempValue;
+	for (auto value : r)
+	{
+		multimap<string, int>::iterator iter = m.find(value);
+		if (iter != m.end())
+			while (iter->first == value)
+			{
+				tempValue = iter->second;
+				iter++;
+				if (iter != m.end())
+					if (iter->first == value)
+						thisLenght += lenght(tempValue, iter->second);
+					else
+						continue;
+				else
+					break;
+			}
+		if (maxLenght < thisLenght)
+		{
+			maxLenght = thisLenght;
+			route = value;
+		}
+		thisLenght = 0;
+	}
+	cout << "Route with max lenght for - " << route << endl;
+}
+
 int main()
 {
 	SetConsoleOutputCP(1251);
@@ -185,8 +229,8 @@ int main()
 		index = 0;
 		for (pugi::xml_node tool = tools.first_child(); tool; tool = tool.next_sibling())
 		{
-			string s = tool.child_value();
-			Parsing(s, index, indexOfStop);
+			string in = tool.child_value();
+			Parsing(in, index, indexOfStop);
 			index++;
 		}
 		indexOfStop++;
@@ -197,112 +241,24 @@ int main()
 	//********************************************************TASK1**************************************************************************
 	string route;
 	int countOfStop = 0;
-	cout << "Task 1 :" << endl;
-	for (auto value : busR)
-		if (countOfStop < stopBus.count(value))
-		{
-			countOfStop = stopBus.count(value);
-			route = value;
-		}
-	cout << "Number of route bus: " << route << " - Quantity of bus stop: " << countOfStop << endl;
-	countOfStop = 0;
-	for (auto value : trolleybusR)
-		if (countOfStop < stopTrolleybus.count(value))
-		{
-			countOfStop = stopTrolleybus.count(value);
-			route = value;
-		}
-	cout << "Number of route trolleybus: " << route << " - Quantity of trolleybus stop: " << countOfStop << endl;
-	countOfStop = 0;
-	for (auto value : tramR)
-		if (countOfStop < stopTram.count(value))
-		{
-			countOfStop = stopTram.count(value);
-			route = value;
-		}
-	cout << "Number of route tram: " << route << " - Quantity of tram stop: " << countOfStop << endl;
-	
-	
+	cout << "Task 1 :" << endl << endl;
+	cout << "Bus: " << endl;
+	Task1(stopBus, busR);
+	cout << "Tram: " << endl;
+	Task1(stopTram, tramR);
+	cout << "Trolleybus: " << endl;
+	Task1(stopTrolleybus, trolleybusR);
+	cout << endl << endl;
 
 	//*********************************************************TASK2***************************************************************************
-	cout << "Task 2: " << endl;
-	double thisLenght = 0, maxLenght = 0;
-	string rout;
-	double tempValue;
-	for (auto value : busR)
-	{
-		multimap<string, int>::iterator iter = stopBus.find(value);
-		if (iter != stopBus.end())
-			while (iter->first == value)
-			{
-				tempValue = iter->second;
-				iter++;
-				if (iter != stopBus.end())
-					if (iter->first == value)
-						thisLenght += lenght(tempValue, iter->second);
-					else
-						continue;
-				else
-					break;
-			}
-		if (maxLenght < thisLenght)
-		{
-			maxLenght = thisLenght;
-			rout = value;
-		}
-		thisLenght = 0;
-	}
-	cout << "Rout with max lenght for bus - " << rout << endl;
-	maxLenght = 0;
-	for (auto value : tramR)
-	{
-		multimap<string, int>::iterator iter = stopTram.find(value);
-		if (iter != stopTram.end())
-			while (iter->first == value)
-			{
-				tempValue = iter->second;
-				iter++;
-				if (iter != stopTram.end())
-					if (iter->first == value)
-						thisLenght += lenght(tempValue, iter->second);
-					else
-						continue;
-				else
-					break;
-			}
-		if (maxLenght < thisLenght)
-		{
-			maxLenght = thisLenght;
-			rout = value;
-		}
-		thisLenght = 0;
-	}
-	cout << "Rout with max lenght for tram - " << rout << endl;
-	maxLenght = 0;
-	for (auto value : trolleybusR)
-	{
-		multimap<string, int>::iterator iter = stopTrolleybus.find(value);
-		if (iter != stopTrolleybus.end())
-			while (iter->first == value)
-			{
-				tempValue = iter->second;
-				iter++;
-				if (iter != stopTrolleybus.end())
-					if (iter->first == value)
-						thisLenght += lenght(tempValue, iter->second);
-					else
-						continue;
-				else
-					break;
-			}
-		if (maxLenght < thisLenght)
-		{
-			maxLenght = thisLenght;
-			rout = value;
-		}
-		thisLenght = 0;
-	}
-	cout << "Rout with max lenght for trolleybus - " << rout << endl;
+	cout << "Task 2: " << endl << endl;
+	cout << "Bus: " << endl;
+	Task2(stopBus, busR);
+	cout << "Tram: " << endl;
+	Task2(stopTram, tramR);
+	cout << "Trolleybus: " << endl;
+	Task2(stopTrolleybus, trolleybusR);
+	cout << endl << endl;
 
 
 	//*********************************************************TASK3***************************************************************************
