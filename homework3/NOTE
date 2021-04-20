@@ -1,0 +1,35 @@
+Pulling https://github.com/rootCurse/IS-2020-prog-2-sem/homework3
+Pull finished
+It's compiled
+
+homework3.cpp: In function 'void mySplit(std::string, std::string&, std::string&)':
+homework3.cpp:38:21: warning: comparison of integer expressions of different signedness: 'int' and 'std::__cxx11::basic_string<char>::size_type' {aka 'unsigned int'} [-Wsign-compare]
+   38 |  for (auto i = 0; i < str.length(); i++)
+      |                   ~~^~~~~~~~~~~~~~
+homework3.cpp:40:9: warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]
+   40 |   if (i < sp)
+      |       ~~^~~~
+homework3.cpp:42:9: warning: comparison of integer expressions of different signedness: 'int' and 'unsigned int' [-Wsign-compare]
+   42 |   if (i > sp)
+      |       ~~^~~~
+homework3.cpp: In function 'void Parsing(std::string, int, int)':
+homework3.cpp:70:24: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, int> >::size_type' {aka 'unsigned int'} [-Wsign-compare]
+   70 |     for (auto i = 0; i < streets.size(); i++)
+      |                      ~~^~~~~~~~~~~~~~~~
+homework3.cpp:69:7: warning: suggest explicit braces to avoid ambiguous 'else' [-Wdangling-else]
+   69 |    if (!streets.empty())
+      |       ^
+homework3.cpp: In function 'void Task1(std::multimap<std::__cxx11::basic_string<char>, int>, std::set<std::__cxx11::basic_string<char> >)':
+homework3.cpp:171:19: warning: comparison of integer expressions of different signedness: 'int' and 'std::multimap<std::__cxx11::basic_string<char>, int>::size_type' {aka 'unsigned int'} [-Wsign-compare]
+  171 |   if (countOfStop < m.count(value))
+      |       ~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+homework3.cpp: In function 'int main()':
+homework3.cpp:267:23: warning: comparison of integer expressions of different signedness: 'int' and 'std::vector<std::pair<std::__cxx11::basic_string<char>, int> >::size_type' {aka 'unsigned int'} [-Wsign-compare]
+  267 |  for (auto it = 0; it < streets.size(); it++)
+      |                    ~~~^~~~~~~~~~~~~~~~
+homework3.cpp:243:6: warning: unused variable 'countOfStop' [-Wunused-variable]
+  243 |  int countOfStop = 0;
+      |      ^~~~~~~~~~~
+
+
+
