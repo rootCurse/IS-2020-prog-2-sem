@@ -84,6 +84,7 @@ void dataRoute(string& data, int indexOfStop)
 	buffer.clear();
 	if (container[indexOfStop].stop == 1)
 	{
+		//todo 888???
 		if (indexOfStop < 888)
 		{
 			for (auto value : data)
