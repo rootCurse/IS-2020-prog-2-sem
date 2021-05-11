@@ -1,5 +1,6 @@
 #ifndef PREDICATE_HPP
 #define PREDICATE_HPP
+#include <functional>
 template<class iterator, class predicate>
 bool allOf(const iterator begin, const iterator end, const predicate pred)
 {
